@@ -1,0 +1,98 @@
+sv_cheats 1
+noclip;
+setpos -5267.78 -832.06 271.17;setang 89.00 -87.62;
+
+ent_create game_text_tf;ent_fire game_text_tf addoutput"targetname credits";test_wait .05;ent_fire credits message"3CP Gravelpit created by Tails" icon"voice_self" display_to_team"0";
+ent_create game_text_tf;ent_fire game_text_tf addoutput"hammerid 111";test_wait .05;ent_keyvalue 111 message"Capture all Control Points to win the Game!" icon"voice_self" display_to_team"0";
+ent_fire trigger_capture_area disable // prevent players from capturing any control points
+ent_fire team_round_timer pause
+give team_control_point_master
+give team_round_timer
+ent_fire game_round_win kill // allowing sudden death
+mp_stalemate_timelimit 600
+say 20/100
+test_wait 2.
+
+ent_create ambient_generic 
+ent_fire ambient_generic addoutput"targetname 5m
+ent_fire 5m addoutput"origin -2954.76 1323.18 752.47
+ent_fire 5m addoutput "message vo\announcer_ends_5min"
+ent_fire 5m addoutput "sound vo\announcer_ends_5min"
+ent_fire 5m addoutput"health 21
+ent_fire 5m addoutput"pitch 100
+ent_fire 5m addoutput"radius 9999
+ent_fire team_round_timer addoutput"On5MinRemain,5m,PlaySound,,1,1
+test_wait 2.
+
+ent_fire announcer_start_red "message vo\announcer_capture_controlpoints"
+
+ent_fire announcer_start_blue "message vo\announcer_capture_controlpoints"
+
+
+
+
+
+
+// Sets stuff
+ent_fire tf_gamerules setblueteamrespawnwavetime 7;
+ent_fire tf_gamerules setredteamrespawnwavetime 7; // Shorter Respawn wavetime
+ent_fire tf_gamerules setblueteamgoalstring"Capture All Control Points, Don't let the enemy do the same!
+ent_fire tf_gamerules setredteamgoalstring"Capture All Control Points, Don't let the enemy do the same!
+test_wait 2.
+ent_fire team_control_point_master addoutput "cpm_restrict_team_cap_win 0"
+ent_fire cap_a_flag setOwner 3
+ent_fire cap_b_flag SetOwner 2
+ent_fire final_cap_flag SetOwner 0
+test_wait 2.
+ent_fire trigger_capture_area SetTeamCanCap "2 1"
+ent_fire trigger_capture_area SetTeamCanCap "3 1"
+ent_fire team_round_timer SetMaxTime 1800
+ent_fire team_round_timer SetTime 125
+ent_fire team_round_timer addoutput"setup_length 7"
+ent_fire team_round_timer addoutput"SetSetupTime 7"
+ent_fire trigger_capture_area addoutput "OnCapTeam2 SetSkin,2,0,-1"
+ent_fire trigger_capture_area addoutput "OnCapTeam1 SetSkin,1,0,-1"
+ent_fire trigger_capture_area addoutput "area_time_to_cap 9"
+ent_fire final_cap_trigger addoutput "area_time_to_cap 10"
+ent_fire trigger_capture_area addoutput "OnCapTeam1 team_round_timer,AddTeamTime,2 275,0,-1"
+ent_fire trigger_capture_area addoutput "OnCapTeam2 team_round_timer,AddTeamTime,3 275,0,-1"
+say 40/100
+
+// sets the final cap to not require A and B
+
+ent_fire final_cap_flag addoutput"team_previouspoint_2_0 final_cap_flag"
+ent_fire final_cap_flag addoutput"team_previouspoint_2_1 final_cap_flag"
+ent_fire final_cap_flag addoutput"team_previouspoint_3_0 final_cap_flag" 
+ent_fire final_cap_flag addoutput"team_previouspoint_3_1 " // unlocking the centeral point
+ent_fire cap_a_flag addoutput"team_previouspoint_3_0 final_cap_flag"
+ent_fire cap_a_flag addoutput"team_previouspoint_2_0 final_cap_flag"
+ent_fire cap_b_flag addoutput"team_previouspoint_3_0 final_cap_flag"
+ent_fire cap_b_flag addoutput"team_previouspoint_2_0 final_cap_flag"
+
+test_wait 3.
+ent_fire team_control_point_master AddOutPut"SetCapLayout 0 2 1
+
+// getting game_round_win to work with the timer
+give game_round_win
+ent_fire game_round_win addoutput "targetname stle"
+ent_fire team_round_timer addoutput "OnFinished stle,RoundWin,,1,1"
+ent_fire team_control_point_master SetCapLayout "0 2 1"
+test_wait .5
+say 90/100
+test_wait 2.
+
+
+
+say DONE!
+mp_restartround 1
+test_wait 4.
+ent_fire trigger_capture_area enable
+ent_fire credits display
+test_wait 9.5
+ent_fire game_text_tf display
+test_wait 4.0
+ent_keyvalue 111 display
+
+
+///
+
